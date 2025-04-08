@@ -1,0 +1,145 @@
+=== Appointment Schema
+
+==== Table: Customers
+- CustomerId (PK, GUID)
+- FullName (NVARCHAR)
+- PhoneNumber (VARCHAR, unique)
+- Email (NVARCHAR, optional)
+- CreatedAt (DATETIME)
+
+==== Table: Appointments
+- AppointmentId (PK, GUID)
+- CustomerId (FK → Customers.CustomerId, nullable for walk-ins)
+- AppointmentDate (DATETIME)
+- StartTime (DATETIME)
+- EndTime (DATETIME)
+- Status (VARCHAR) → [Pending, Confirmed, Completed, Cancelled]
+- CreatedBy (FK → Users.UserId)
+- Notes (NVARCHAR, optional)
+- CreatedAt (DATETIME)
+
+==== Table: AppointmentServices
+- Id (PK)
+- AppointmentId (FK → Appointments.AppointmentId)
+- ServiceId (FK → Services.ServiceId)
+- AssignedStaffId (FK → Staff.StaffId)
+- PriceAtBooking (DECIMAL) -- For historical pricing
+- EstimatedDurationMins (INT)
+
+==== Table: Services
+- ServiceId (PK, GUID)
+- Name (NVARCHAR)
+- Category (e.g., Hair, Skin) (NVARCHAR)
+- Price (DECIMAL)
+- DurationMins (INT)
+- IsActive (BIT)
+
+==== Table: Staff
+- StaffId (PK, GUID)
+- FullName (NVARCHAR)
+- Specializations (NVARCHAR)
+- IsActive (BIT)
+- WorkingHoursJson (NVARCHAR) -- e.g., { "Mon": ["10:00-18:00"], ... }
+
+=== Staff Management Schema
+
+==== Table: Staff
+- StaffId (PK, GUID)
+- FullName (NVARCHAR)
+- PhoneNumber (VARCHAR, unique)
+- Email (NVARCHAR)
+- IsActive (BIT)
+- Role (VARCHAR) → [Beautician, HairStylist, Receptionist, Manager, etc.]
+- DateOfJoining (DATE)
+- ProfilePictureUrl (NVARCHAR)
+- CreatedAt (DATETIME)
+
+==== Table: StaffWorkingHours
+- Id (PK)
+- StaffId (FK → Staff.StaffId)
+- DayOfWeek (VARCHAR) → [Monday, Tuesday, ...]
+- StartTime (TIME)
+- EndTime (TIME)
+
+==== Table: StaffServices
+- Id (PK)
+- StaffId (FK → Staff.StaffId)
+- ServiceId (FK → Services.ServiceId)
+
+==== Table: Users (for login access control)
+- UserId (PK, GUID)
+- StaffId (nullable, FK → Staff.StaffId)
+- Username (VARCHAR)
+- PasswordHash (VARCHAR)
+- Role (VARCHAR) → [Admin, Manager, Staff]
+- LastLogin (DATETIME)
+=== Inventory Schema
+
+==== Table: Products
+- ProductId (PK, GUID)
+- Name (NVARCHAR)
+- Category (e.g., Shampoo, Wax) (NVARCHAR)
+- Type (VARCHAR) → [Retail, Consumable]
+- Unit (e.g., ml, pcs) (NVARCHAR)
+- SellingPrice (DECIMAL)
+- CostPrice (DECIMAL)
+- LowStockThreshold (INT)
+- IsActive (BIT)
+- CreatedAt (DATETIME)
+
+==== Table: ProductStock
+- Id (PK)
+- ProductId (FK → Products.ProductId)
+- Quantity (INT)
+- UpdatedAt (DATETIME)
+- Operation (VARCHAR) → [Purchase, Sale, Used, Returned]
+- ReferenceId (nullable, e.g., InvoiceId or ServiceId)
+- Notes (optional)
+
+==== Table: ProductSales
+- Id (PK)
+- ProductId (FK → Products.ProductId)
+- CustomerId (FK → Customers.CustomerId)
+- Quantity (INT)
+- TotalAmount (DECIMAL)
+- SoldBy (FK → Staff.StaffId)
+- InvoiceId (FK → Invoices.InvoiceId)
+- CreatedAt (DATETIME)
+=== Invoice & Payments Schema
+
+==== Table: Invoices
+- InvoiceId (PK, GUID)
+- CustomerId (FK → Customers.CustomerId)
+- AppointmentId (nullable, FK → Appointments.AppointmentId)
+- InvoiceDate (DATETIME)
+- Subtotal (DECIMAL)
+- Discount (DECIMAL)
+- TaxAmount (DECIMAL)
+- TotalAmount (DECIMAL)
+- PaymentStatus (VARCHAR) → [Paid, Partial, Unpaid]
+- PaymentMethod (VARCHAR) → [Cash, Card, UPI, Online]
+- CreatedBy (FK → Users.UserId)
+
+==== Table: Payments
+- PaymentId (PK)
+- InvoiceId (FK → Invoices.InvoiceId)
+- AmountPaid (DECIMAL)
+- PaidOn (DATETIME)
+- PaymentMode (VARCHAR)
+- TransactionReference (optional)
+=== Reporting Support Tables
+
+==== Table: DailyCashLogs
+- Id (PK)
+- Date (DATE)
+- OpeningCash (DECIMAL)
+- ClosingCash (DECIMAL)
+- Notes (NVARCHAR)
+- RecordedBy (FK → Users.UserId)
+
+==== Table: ActivityLogs
+- Id (PK)
+- UserId (FK → Users.UserId)
+- Action (VARCHAR)
+- Description (NVARCHAR)
+- Timestamp (DATETIME)
