@@ -1,0 +1,60 @@
+1. Dashboard (Main Hub)
+Top Nav Bar:
+Logo + Glamora
+Notifications (Bell icon)
+Profile dropdown (Admin/Staff)
+Settings
+
+Left Sidebar Navigation:
+Dashboard Overview
+Appointments
+Staff Scheduling
+Inventory
+Clients
+Payments & Invoices
+Reports
+Marketing Tools
+Admin Panel (Roles & Permissions)
+Tutorials & Support
+
+Main Dashboard Area (Widgets & Views):
+Calendar View (Appointments)
+Quick Stats (Today’s Bookings, Revenue, etc.)
+Staff Availability Snapshot
+Low Inventory Alerts
+Recent Client Activity
+
+2. Appointment Booking Page
+Calendar (Day/Week/Month view)
+Book New Appointment (Modal or Sidebar)
+Select Service
+Assign Staff
+Select Date/Time
+Client Info (search or new)
+Reminders (SMS/WhatsApp toggle)
+
+3. Inventory Management
+Product List Table
+Filters (Category, Low Stock)
+Add/Edit Product Form
+Name, Brand, Qty, Cost
+Stock Alert Settings
+
+4. Client Management
+Client List View (Searchable)
+Client Profile Page
+Visit History
+Preferences
+Contact Info
+Packages/Subscriptions
+
+5. Reports
+Sales Report
+Staff Performance
+Product Usage
+Custom Filters (Date, Branch, Staff)
+
+6. Admin Panel
+Create/Edit Roles
+Set Permissions (Checkbox Matrix)
+Branch Management
