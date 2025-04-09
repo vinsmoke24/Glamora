@@ -1,0 +1,58 @@
+Trigger: Appointment marked as “Completed”
+→ Fetch all booked services
+→ Sum prices at time of booking (AppointmentServices.PriceAtBooking)
+→ Apply package/discounts if any
+→ Apply GST (if enabled)
+→ Generate invoice and mark appointment as “Billed”
+ 
+
+
+
+
+#Code Sample
+
+decimal subtotal = appointment.Services.Sum(s => s.PriceAtBooking);
+decimal discount = CalculateDiscount(appointment.CustomerId, services);
+decimal tax = ApplyGST(subtotal - discount);
+decimal total = subtotal - discount + tax;
+
+CreateInvoice(appointmentId, subtotal, discount, tax, total);
+
+
+
+
+Token Payment Handling
+
+- During booking: collect advance token (e.g., ₹100)
+- Store as `Payment` record (linked to Appointment, not Invoice yet)
+- When full invoice is generated:
+    → TotalAmount = Total - TokenPaid
+    → Token is applied in final bill
+
+
+💰 Retail Product Sale Flow
+plaintext
+Copy
+Edit
+- Select product(s), customer, quantity
+- Generate invoice
+- Deduct stock
+- Accept payment (Cash/UPI/Card)
+
+
+
+🔐 Admin Features
+Manually edit invoice before finalizing
+
+Apply discounts
+
+Split payment modes (Cash + Card)
+
+Download/print invoice
+
+ 🧾 GST Support
+GST% per service/product (configurable)
+
+Auto-calculate and add to invoice
+
+Show CGST/SGST breakdown if required

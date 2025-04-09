@@ -1,0 +1,51 @@
+=== Reporting Engine
+
+==== 1. Daily Sales Summary
+- Total revenue by:
+  - Appointments
+  - Product sales
+  - Payment modes (cash, UPI, etc.)
+- Total discounts given
+- Taxes collected
+- Cash in hand (reconciled with DailyCashLogs)
+
+==== 2. Appointment Report
+- Appointments by:
+  - Status (completed, cancelled, no-show)
+  - Service type
+  - Staff member
+  - Time slots (peak hours)
+
+==== 3. Staff Performance Report
+- Number of services handled
+- Revenue generated per staff
+- Working hours vs. appointment hours
+- Customer ratings (if feedback added later)
+
+==== 4. Inventory Usage Report
+- Product usage by date range
+- Top consumed products
+- Low stock alerts
+- Products nearing expiry (if applicable)
+
+==== 5. Customer Report
+- Most frequent customers
+- Total spend per customer
+- Services used over time
+
+⚙️ Technical Implementation Notes
+Reports generated via SQL views + stored procedures
+
+Exposed through ASP.NET API endpoints
+
+UI shows filters: date range, branch, staff, category
+
+Export options: CSV / Excel / Print
+
+🧠 Optimization Ideas (Phase 2)
+Schedule auto-email of daily/weekly reports
+
+BI Dashboard (PowerBI embedded or Chart.js)
+
+Notification triggers: low sales today, low stock, etc.
+

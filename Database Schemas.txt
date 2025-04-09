@@ -26,6 +26,25 @@
 - PriceAtBooking (DECIMAL) -- For historical pricing
 - EstimatedDurationMins (INT)
 
+==== Table: AppointmentServiceProducts
+- Id (PK)
+- AppointmentServiceId (FK → AppointmentServices.Id)
+- ProductId (FK → Products.ProductId)
+- Quantity (nullable, for tracking inventory use)
+
+==== Table: ServiceProducts
+- Id (PK)
+- ServiceId (FK → Services.ServiceId)
+- ProductId (FK → Products.ProductId)
+- IsDefault (BIT) -- used to auto-suggest during booking
+
+==== Table: ServiceProductUsage
+- Id (PK)
+- ServiceId (FK → Services.ServiceId)
+- ProductId (FK → Products.ProductId)
+- DefaultQuantity (DECIMAL)  -- e.g., 20ml
+- Unit (e.g., ml, pcs) (NVARCHAR)
+
 ==== Table: Services
 - ServiceId (PK, GUID)
 - Name (NVARCHAR)

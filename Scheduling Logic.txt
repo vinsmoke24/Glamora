@@ -1,0 +1,20 @@
+[plantuml]
+----
+@startuml
+start
+:Select services;
+:Select staff/date/time;
+:Calculate total duration;
+:Fetch staff's working hours;
+:Check overlapping appointments;
+if (Slot free?) then (Yes)
+  :Create appointment;
+  :Assign staff and services;
+  :Send confirmation;
+  stop
+else (No)
+  :Show error / suggest alternatives;
+  stop
+endif
+@enduml
+----

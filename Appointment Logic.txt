@@ -1,0 +1,61 @@
+5Flow for Appointment
+
+1. Customer selects:
+   - Services (one or more)
+   - Preferred staff (optional)
+   - Preferred date/time
+   - System shows applicable products for each service
+   - Customer selects preferred product(s) per service
+
+2. System checks:
+   - Staff availability (from `StaffWorkingHours`)
+   - Staff service eligibility (from `StaffServices`)
+   - Appointment overlaps for selected time (from `Appointments`)
+
+3. If slot is valid:
+   - Create appointment with all services
+   - Assign staff
+   - Optionally, collect token payment
+
+4. Send SMS/email confirmation
+
+
+
+[plantuml]
+----
+@startuml
+start
+:Select services;
+:Select staff/date/time;
+:Calculate total duration;
+:Fetch staff's working hours;
+:Check overlapping appointments;
+if (Slot free?) then (Yes)
+  :Create appointment;
+  :Assign staff and services;
+  :Send confirmation;
+  stop
+else (No)
+  :Show error / suggest alternatives;
+  stop
+endif
+@enduml
+----
+
+
+
+
+
+
+#sample code for Availability Check
+bool IsSlotAvailable(Guid staffId, DateTime startTime, int durationMins)
+{
+    var endTime = startTime.AddMinutes(durationMins);
+
+    var workingHours = GetStaffWorkingHours(staffId, startTime.DayOfWeek);
+    if (!IsWithinWorkingHours(workingHours, startTime, endTime))
+        return false;
+
+    var overlappingAppointments = GetAppointments(staffId, startTime, endTime);
+    return overlappingAppointments.Count == 0;
+}

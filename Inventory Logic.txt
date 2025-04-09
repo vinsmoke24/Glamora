@@ -1,0 +1,43 @@
+When a service is marked “Completed,” we need to:
+
+Deduct the pre-selected products used (per AppointmentServiceProducts)
+
+Use predefined standard quantities for each product-service pair
+
+
+
+
+1. Appointment marked as Completed by Staff
+2. For each service:
+   - Lookup products used (from AppointmentServiceProducts)
+   - Fetch quantity per ServiceProductUsage
+   - Deduct from ProductStock
+   - Log in ProductStock table with Operation = "Used"
+
+
+
+
+
+#Pseudocode
+
+foreach (var appointmentService in appointment.Services)
+{
+    foreach (var product in appointmentService.SelectedProducts)
+    {
+        var usageQty = GetDefaultUsage(product.ProductId, appointmentService.ServiceId);
+        DeductStock(product.ProductId, usageQty, OperationType.Used, appointmentService.Id);
+    }
+}
+
+
+
+
+🔐 Admin Control Panel
+Option to edit usage quantity per product for real-world tuning
+
+Can be logged in an audit trail for inventory reconciliation
+
+🧠 Optional (Phase 2)
+Alert low stock post-consumption
+
+AI suggestion: “You’ll run out of L’Oreal in 5 days at this rate”
