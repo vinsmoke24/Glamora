@@ -1,7 +1,7 @@
 # Glamora
 Private ERP system for salon/spa/parlour management
 
-We will use Stack For the system (Open to suggestions)
+We will use Stack For the system
 
 - **Frontend**: HTML + CSS + Bootstrap (Admin dashboard and customer-facing interface)
 - **Backend**: ASP.NET Core Web API (C#)
